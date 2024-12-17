@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Health care site</title>
+    <meta name="description" content="自家焙煎したこだわりのコーヒーと、思わず長居したくなるような居心地の良い空間を提供するカフェ「KISSA」のウェブサイトです。">
+    <meta name="viewport" content="width=device-width">
+    <script src="./js/toggle-menu.js"></script>
+    <link href="./css/common.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+    <style>
+        /* 食事記録フォーム用スタイル */
+        .meal-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .meal-container h2 {
+            text-align: center;
+        }
+
+        .meal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .meal-form label {
+            font-weight: bold;
+            font-size: 18px; /* フォントサイズを大きくする */
+        }
+
+        .meal-form textarea,
+        .meal-form input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .meal-form button {
+            padding: 10px;
+            background-color: #02ebeb; /* ボタンの背景色 */
+            color: white;
+            border: 2px solid #02ebeb; /* ボタンの枠線の色 */
+            border-radius: 30px; /* ボタンの角を丸くする */
+            font-size: 21px; /* ボタンのフォントサイズを大きくする */
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s; /* ホバー時のアニメーション */
+        }
+
+        .meal-form button:hover {
+            background-color: white; /* ホバー時の背景色 */
+            color: #02ebeb; /* ホバー時の文字色 */
+            border-color: #02ebeb; /* ホバー時の枠線の色 */
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        .meal-image-preview img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+
+        .camera-button {
+            background-color: #008CBA; /* カメラボタンの色 */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .camera-button:hover {
+            background-color: #007B9A; /* ホバー時の色 */
+        }
+        #savedMeals {
+            margin-top: 30px;
+        }
+        .saved-meal {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        .saved-meal img {
+            max-width: 100px;
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a class="header-logo" href="./test.html">
+                <img src="images/header/Image.png" alt="KISSA">
+                
+            </a>
+            <h1></h1>
+            <button class="toggle-menu-button"></button>
+            <div class="header-site-menu">
+                <nav class="site-menu">
+                    <ul>
+                        <li><a href="/karenda.html">体重と体脂肪管理カレンダー</a></li>
+                        <li><a href="./nikki3.html">食事記録</a></li>
+                        <li><a href="bmi.html">BMIの計算</a></li>
+                        <li><a href="./contact-form/">FORM</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="first-view">
+            <div class="first-view-text">
+                <h1>自分の健康を記録できるサイト <br>Health care.</h1>
+                <p>健康寿命を延ばしていきましょう。</p>
+                <div class="link-button-area">
+                    <a class="link-button" href="\karenda.html">START</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="meal-container">
+           
+
+            <h2>食事記録</h2>
+            <form id="mealForm" class="meal-form">
+                
+                <label for="mealDate">日付:</label>
+                <input type="date" id="mealDate" required>
+                <!-- 朝食 -->
+                <label for="breakfast">朝食:</label>
+                <textarea id="breakfast" name="breakfast" rows="2" placeholder="朝食に食べたものを記録してください"></textarea>
+                <input type="file" id="breakfastImage" accept="image/*" style="display:none;">
+                <button type="button" class="camera-button" onclick="document.getElementById('breakfastImage').click()">写真を撮る📷</button>
+                <div class="meal-image-preview" id="breakfastImagePreview"></div>
+
+                <!-- 昼食 -->
+                <label for="lunch">昼食:</label>
+                <textarea id="lunch" name="lunch" rows="2" placeholder="昼食に食べたものを記録してください"></textarea>
+                <input type="file" id="lunchImage" accept="image/*" style="display:none;">
+                <button type="button" class="camera-button" onclick="document.getElementById('lunchImage').click()">写真を撮る📷</button>
+                <div class="meal-image-preview" id="lunchImagePreview"></div>
+
+                <!-- 夕食 -->
+                <label for="dinner">夕食:</label>
+                <textarea id="dinner" name="dinner" rows="2" placeholder="夕食に食べたものを記録してください"></textarea>
+                <input type="file" id="dinnerImage" accept="image/*" style="display:none;">
+                <button type="button" class="camera-button" onclick="document.getElementById('dinnerImage').click()">写真を撮る📷</button>
+                <div class="meal-image-preview" id="dinnerImagePreview"></div>
+
+                <!-- 間食 -->
+                <label for="snacks">間食:</label>
+                <textarea id="snacks" name="snacks" rows="2" placeholder="間食に食べたものを記録してください"></textarea>
+                <input type="file" id="snacksImage" accept="image/*" style="display:none;">
+                <button type="button" class="camera-button" onclick="document.getElementById('snacksImage').click()">写真を撮る📷</button>
+                <div class="meal-image-preview" id="snacksImagePreview"></div>
+
+                <button type="submit">記録を保存</button> <!-- 保存ボタン -->
+            </form>
+            <div id="savedMeals"></div>
+        </div>
+
+        <div id="result"></div>
+
+        <div class="lead">
+            <p></p>
+            <div class="link-button-area">
+                <a class="link-button" href=",/concept.html">ログイン</a>
+            </div>
+        </div>
+        <div class="recommended">
+            <h2>RECOMMENDED</h2>
+            <div class="link-button-area">
+                <a class="link-button" href=",/menu.html">menu</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <nav class="site-menu">
+            <ul>
+                <li><a href="./concept.html">CONCEPT</a></li>
+                <li><a href="./menu.html">MENU</a></li>
+                <li><a href="./SHOP.html">SHOP</a></li>
+                <li><a href="./ACCESS.html">ACCESS</a></li>
+            </ul>
+        </nav>
+        <a class="footer-logo" href="./index.html">
+            <img src="./images/common/logo-footer.png" alt="KISSA">
+        </a>
+        <p class="footer-tel">TEL 01-2345-6789</p>
+        <p class="footer-time">OPEN Fri-Sun 11:00-16:00</p>
+        <p class="copyright"><small>&copy;Kissa</small></p>
+    </footer>
+
+        <!-- 保存した記録を表示するセクション -->
+         <div id="SavedMeals"></div>
+    
+
+<script>
+  
+  function setTodayDate() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1
+    const dd = String(today.getDate()).padStart(2, '0');
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    document.getElementById("mealDate").value = formattedDate;
+}
+
+// ページ読み込み時に日付を今日の日付に設定
+window.onload = function () {
+    setTodayDate();
+    displaySavedMeals();
+};
+
+    // 画像プレビューの表示
+    function setupImagePreview(inputId, previewId) {
+        document.getElementById(inputId).addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgPreview = document.getElementById(previewId);
+                    imgPreview.innerHTML = '<img src="' + e.target.result + '" alt="食事の写真">';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    setupImagePreview("breakfastImage", "breakfastImagePreview");
+    setupImagePreview("lunchImage", "lunchImagePreview");
+    setupImagePreview("dinnerImage", "dinnerImagePreview");
+    setupImagePreview("snacksImage", "snacksImagePreview");
+
+    // 画像ファイルをBase64に変換して保存
+    function getBase64Image(file, callback) {
+        if (!file) {
+            // ファイルがない場合、空文字列をコールバックに渡す
+            callback("");
+            return;
+        }
+        const reader = new FileReader();
+        reader.onloadend = function () {
+            callback(reader.result);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    
+    // 保存処理
+    document.getElementById("mealForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // フォーム送信をキャンセル
+
+        const mealDate = document.getElementById("mealDate").value;
+        const breakfast = document.getElementById("breakfast").value;
+        const lunch = document.getElementById("lunch").value;
+        const dinner = document.getElementById("dinner").value;
+        const snacks = document.getElementById("snacks").value;
+
+        // 各画像を取得
+        const breakfastImageFile = document.getElementById("breakfastImage").files[0];
+        const lunchImageFile = document.getElementById("lunchImage").files[0];
+        const dinnerImageFile = document.getElementById("dinnerImage").files[0];
+        const snacksImageFile = document.getElementById("snacksImage").files[0];
+
+        // 画像データをBase64に変換して保存
+        getBase64Image(breakfastImageFile, function (breakfastImageBase64) {
+            getBase64Image(lunchImageFile, function (lunchImageBase64) {
+                getBase64Image(dinnerImageFile, function (dinnerImageBase64) {
+                    getBase64Image(snacksImageFile, function (snacksImageBase64) {
+
+                        const mealData = {
+                            date: mealDate,
+                            breakfast: breakfast,
+                            breakfastImage: breakfastImageBase64 || "",
+                            lunch: lunch,
+                            lunchImage: lunchImageBase64 || "",
+                            dinner: dinner,
+                            dinnerImage: dinnerImageBase64 || "",
+                            snacks: snacks,
+                            snacksImage: snacksImageBase64 || ""
+                        };
+
+                        // ローカルストレージに保存
+                        const mealRecords = JSON.parse(localStorage.getItem('mealRecords')) || {};
+                        mealRecords[mealDate] = mealData;
+                        localStorage.setItem('mealRecords', JSON.stringify(mealRecords));
+
+                        alert("食事記録が保存されました！");
+
+                        // 保存後、記録表示を更新
+                        displaySavedMeals();
+                    });
+                });
+            });
+        });
+    });
+
+        
+    // 保存された食事記録を表示する
+    function displaySavedMeals() {
+        const savedMealsContainer = document.getElementById("savedMeals");
+        savedMealsContainer.innerHTML = ""; // 以前の内容をクリア
+        const mealRecords = JSON.parse(localStorage.getItem('mealRecords')) || {};
+        
+        for (const date in mealRecords) {
+            const mealData = mealRecords[date];
+            const mealHtml = `
+                <div class="saved-meal">
+                    <h3>${date}</h3>
+                    <p><strong>朝食:</strong> ${mealData.breakfast}</p>
+                    ${mealData.breakfastImage ? `<img src="${mealData.breakfastImage}" alt="朝食の写真">` : ''}
+                    <p><strong>昼食:</strong> ${mealData.lunch}</p>
+                    ${mealData.lunchImage ? `<img src="${mealData.lunchImage}" alt="昼食の写真">` : ''}
+                    <p><strong>夕食:</strong> ${mealData.dinner}</p>
+                    ${mealData.dinnerImage ? `<img src="${mealData.dinnerImage}" alt="夕食の写真">` : ''}
+                    <p><strong>間食:</strong> ${mealData.snacks}</p>
+                    ${mealData.snacksImage ? `<img src="${mealData.snacksImage}" alt="間食の写真">` : ''}
+                </div>
+            `;
+            savedMealsContainer.innerHTML += mealHtml;
+        }
+    }
+    
+    // ページ読み込み時に保存された記録を表示
+    window.onload = function () {
+        displaySavedMeals();
+        
+    };
+   
+</script>
+
+</body>
+
+</html>
